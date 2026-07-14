@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ShoppingBag, ChevronDown, Globe, Menu, X, Home } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { useFilter, type Category } from "@/lib/filter";
