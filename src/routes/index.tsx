@@ -35,7 +35,6 @@ function Index() {
                 <Hero />
                 <Collections />
                 <ProductGrid />
-                <Moodboard />
               </main>
               <Footer />
             </div>
