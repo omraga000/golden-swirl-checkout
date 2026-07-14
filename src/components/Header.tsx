@@ -70,36 +70,15 @@ export function Header() {
             HOME
           </button>
           {CATEGORIES.map((cat) => (
-            <div
+            <button
               key={cat.key}
-              className="relative"
-              onMouseEnter={() => setHovered(cat.key)}
-              onMouseLeave={() => setHovered(null)}
+              onClick={() => chooseCategory(cat.key)}
+              className="py-6 hover:text-gold transition-colors"
             >
-              <Link
-                to="/collection"
-                search={{ category: cat.key, q: "", notes: "", min: 0, max: 500 }}
-                onClick={() => setHovered(null)}
-                className="flex items-center gap-1.5 py-6 hover:text-gold transition-colors"
-              >
-                {cat.label}
-                <ChevronDown className="w-3 h-3" />
-              </Link>
-              {hovered === cat.key && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full min-w-[160px] border border-gold/30 bg-obsidian/95 backdrop-blur-lg animate-fade-up">
-                  {SEASONS.map((s) => (
-                    <button
-                      key={s.key}
-                      onClick={() => choose(cat.key, s.key)}
-                      className="block w-full text-left px-5 py-3 text-[11px] tracking-[0.3em] text-foreground/70 hover:bg-gold/10 hover:text-gold transition-colors"
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+              {cat.label}
+            </button>
           ))}
+
         </nav>
 
         {/* Right controls */}
