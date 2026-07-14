@@ -146,35 +146,16 @@ export function Header() {
             <Home className="w-4 h-4 text-gold" /> HOME
           </button>
 
-          {CATEGORIES.map((cat) => {
-            const open = mobileCat === cat.key;
-            return (
-              <div key={cat.key} className="py-1">
-                <button
-                  onClick={() => setMobileCat(open ? null : cat.key)}
-                  className="w-full flex items-center justify-between py-4 text-[12px] tracking-[0.35em] text-foreground hover:text-gold transition-colors"
-                >
-                  {cat.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180 text-gold" : ""}`} />
-                </button>
-                <div className={`grid transition-all duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                  <div className="overflow-hidden">
-                    <div className="pl-4 pb-3 flex flex-col">
-                      {SEASONS.map((s) => (
-                        <button
-                          key={s.key}
-                          onClick={() => choose(cat.key, s.key)}
-                          className="text-left py-2.5 text-[11px] tracking-[0.3em] text-foreground/70 hover:text-gold transition-colors"
-                        >
-                          — {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => chooseCategory(cat.key)}
+              className="w-full text-left py-4 text-[12px] tracking-[0.35em] text-foreground hover:text-gold transition-colors"
+            >
+              {cat.label}
+            </button>
+          ))}
+
 
           {/* Language row */}
           <div className="py-4 flex items-center gap-3">
