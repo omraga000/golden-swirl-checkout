@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Collections } from "@/components/Collections";
 import { ProductGrid } from "@/components/ProductGrid";
+import { Moodboard } from "@/components/Moodboard";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/lib/cart";
@@ -35,6 +36,7 @@ function Index() {
                 <Hero />
                 <Collections />
                 <ProductGrid />
+                <Moodboard />
               </main>
               <Footer />
             </div>
