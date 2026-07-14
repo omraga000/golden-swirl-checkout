@@ -24,20 +24,16 @@ export function Header() {
   const goHome = async () => {
     setFilter(null, null);
     setMobileOpen(false);
-    setMobileCat(null);
     await navigate({ to: "/" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const choose = (c: Category, s: Season) => {
-    setFilter(c, s);
-    setHovered(null);
+  const chooseCategory = async (c: Category) => {
+    setFilter(c, null);
     setMobileOpen(false);
-    setMobileCat(null);
-    setTimeout(() => {
-      document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+    await navigate({ to: "/collection", search: { category: c, q: "", notes: "", min: 0, max: 500 } });
   };
+
 
   return (
     <header className="fixed top-0 inset-x-0 z-40 border-b border-gold/20 backdrop-blur-xl bg-obsidian/70">
