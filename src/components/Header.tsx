@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ShoppingBag, ChevronDown, Globe, Menu, X, Home } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { useI18n, type Lang } from "@/lib/i18n";
-import { useFilter, type Category, type Season } from "@/lib/filter";
+import { useFilter, type Category } from "@/lib/filter";
 import emblem from "@/assets/zayd-emblem.png";
 
 const CATEGORIES: { key: Category; label: string }[] = [
@@ -13,39 +13,27 @@ const CATEGORIES: { key: Category; label: string }[] = [
   { key: "perfume", label: "PERFUME" },
 ];
 
-const SEASONS: { key: Season; label: string }[] = [
-  { key: "summer", label: "SUMMER" },
-  { key: "winter", label: "WINTER" },
-  { key: "new",    label: "NEW" },
-];
-
 export function Header() {
   const { count, setOpen } = useCart();
   const { lang, setLang } = useI18n();
   const { setFilter } = useFilter();
   const [langOpen, setLangOpen] = useState(false);
-  const [hovered, setHovered] = useState<Category | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileCat, setMobileCat] = useState<Category | null>(null);
   const navigate = useNavigate();
 
   const goHome = async () => {
     setFilter(null, null);
     setMobileOpen(false);
-    setMobileCat(null);
     await navigate({ to: "/" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const choose = (c: Category, s: Season) => {
-    setFilter(c, s);
-    setHovered(null);
+  const chooseCategory = async (c: Category) => {
+    setFilter(c, null);
     setMobileOpen(false);
-    setMobileCat(null);
-    setTimeout(() => {
-      document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+    await navigate({ to: "/collection", search: { category: c, q: "", notes: "", min: 0, max: 500 } });
   };
+
 
   return (
     <header className="fixed top-0 inset-x-0 z-40 border-b border-gold/20 backdrop-blur-xl bg-obsidian/70">
@@ -82,36 +70,15 @@ export function Header() {
             HOME
           </button>
           {CATEGORIES.map((cat) => (
-            <div
+            <button
               key={cat.key}
-              className="relative"
-              onMouseEnter={() => setHovered(cat.key)}
-              onMouseLeave={() => setHovered(null)}
+              onClick={() => chooseCategory(cat.key)}
+              className="py-6 hover:text-gold transition-colors"
             >
-              <Link
-                to="/collection"
-                search={{ category: cat.key, q: "", notes: "", min: 0, max: 500 }}
-                onClick={() => setHovered(null)}
-                className="flex items-center gap-1.5 py-6 hover:text-gold transition-colors"
-              >
-                {cat.label}
-                <ChevronDown className="w-3 h-3" />
-              </Link>
-              {hovered === cat.key && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full min-w-[160px] border border-gold/30 bg-obsidian/95 backdrop-blur-lg animate-fade-up">
-                  {SEASONS.map((s) => (
-                    <button
-                      key={s.key}
-                      onClick={() => choose(cat.key, s.key)}
-                      className="block w-full text-left px-5 py-3 text-[11px] tracking-[0.3em] text-foreground/70 hover:bg-gold/10 hover:text-gold transition-colors"
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+              {cat.label}
+            </button>
           ))}
+
         </nav>
 
         {/* Right controls */}
@@ -179,35 +146,16 @@ export function Header() {
             <Home className="w-4 h-4 text-gold" /> HOME
           </button>
 
-          {CATEGORIES.map((cat) => {
-            const open = mobileCat === cat.key;
-            return (
-              <div key={cat.key} className="py-1">
-                <button
-                  onClick={() => setMobileCat(open ? null : cat.key)}
-                  className="w-full flex items-center justify-between py-4 text-[12px] tracking-[0.35em] text-foreground hover:text-gold transition-colors"
-                >
-                  {cat.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180 text-gold" : ""}`} />
-                </button>
-                <div className={`grid transition-all duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                  <div className="overflow-hidden">
-                    <div className="pl-4 pb-3 flex flex-col">
-                      {SEASONS.map((s) => (
-                        <button
-                          key={s.key}
-                          onClick={() => choose(cat.key, s.key)}
-                          className="text-left py-2.5 text-[11px] tracking-[0.3em] text-foreground/70 hover:text-gold transition-colors"
-                        >
-                          — {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => chooseCategory(cat.key)}
+              className="w-full text-left py-4 text-[12px] tracking-[0.35em] text-foreground hover:text-gold transition-colors"
+            >
+              {cat.label}
+            </button>
+          ))}
+
 
           {/* Language row */}
           <div className="py-4 flex items-center gap-3">
