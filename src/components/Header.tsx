@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ShoppingBag, ChevronDown, Globe, Menu, X, Home } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { useFilter, type Category, type Season } from "@/lib/filter";
@@ -27,10 +27,13 @@ export function Header() {
   const [hovered, setHovered] = useState<Category | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileCat, setMobileCat] = useState<Category | null>(null);
+  const navigate = useNavigate();
 
-  const goHome = () => {
+  const goHome = async () => {
     setFilter(null, null);
     setMobileOpen(false);
+    setMobileCat(null);
+    await navigate({ to: "/" });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
