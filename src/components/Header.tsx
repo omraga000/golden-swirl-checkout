@@ -3,7 +3,7 @@ import { ShoppingBag, ChevronDown, Globe, Menu, X, Home } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { useI18n, type Lang } from "@/lib/i18n";
-import { useFilter, type Category, type Season } from "@/lib/filter";
+import { useFilter, type Category } from "@/lib/filter";
 import emblem from "@/assets/zayd-emblem.png";
 
 const CATEGORIES: { key: Category; label: string }[] = [
@@ -13,20 +13,12 @@ const CATEGORIES: { key: Category; label: string }[] = [
   { key: "perfume", label: "PERFUME" },
 ];
 
-const SEASONS: { key: Season; label: string }[] = [
-  { key: "summer", label: "SUMMER" },
-  { key: "winter", label: "WINTER" },
-  { key: "new",    label: "NEW" },
-];
-
 export function Header() {
   const { count, setOpen } = useCart();
   const { lang, setLang } = useI18n();
   const { setFilter } = useFilter();
   const [langOpen, setLangOpen] = useState(false);
-  const [hovered, setHovered] = useState<Category | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileCat, setMobileCat] = useState<Category | null>(null);
   const navigate = useNavigate();
 
   const goHome = async () => {
