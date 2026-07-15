@@ -91,9 +91,15 @@ function Discovery() {
     setParam({ notes: next.join(",") });
   };
 
+  const mood = search.mood;
+
   const filtered = useMemo(() => {
     return PRODUCTS.filter((p) => {
       if (category && p.category !== category) return false;
+      if (mood === "summer" && p.season !== "summer") return false;
+      if (mood === "winter" && p.season !== "winter") return false;
+      if (mood === "new" && p.season !== "new") return false;
+      if (mood === "bestseller" && !p.bestseller) return false;
       if (activeNotes.length && !activeNotes.every((n) => p.notes.includes(n))) return false;
       if (p.price < minP || p.price > maxP) return false;
       if (q) {
@@ -102,7 +108,7 @@ function Discovery() {
       }
       return true;
     });
-  }, [category, activeNotes.join(","), minP, maxP, q]);
+  }, [category, mood, activeNotes.join(","), minP, maxP, q]);
 
   // auto-suggest
   const suggestions = useMemo(() => {
