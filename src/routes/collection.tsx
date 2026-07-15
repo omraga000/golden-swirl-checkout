@@ -141,6 +141,46 @@ function Discovery() {
           </p>
         </div>
 
+        {/* Mood row — Summer / Winter / New / Bestsellers */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-5 max-w-2xl mx-auto">
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/40" />
+            <span className="text-[10px] tracking-[0.5em] text-gold-muted">CHOOSE YOUR MOOD</span>
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/40" />
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {MOODS.map(({ id, label, icon: Icon, hint }) => {
+              const active = mood === id;
+              return (
+                <button
+                  key={id || "all"}
+                  onClick={() => setParam({ mood: id })}
+                  aria-pressed={active}
+                  title={hint}
+                  className={`group relative flex items-center gap-2.5 px-5 py-3 border transition-all duration-500 overflow-hidden ${
+                    active
+                      ? "border-gold text-obsidian bg-gradient-to-br from-gold-bright to-gold shadow-[0_0_28px_rgba(212,175,55,0.45)]"
+                      : "border-gold/25 text-foreground/75 hover:border-gold/70 hover:text-gold hover:-translate-y-0.5"
+                  }`}
+                >
+                  <span
+                    className={`absolute inset-0 bg-gradient-radial-gold blur-2xl transition-opacity duration-700 ${
+                      active ? "opacity-0" : "opacity-0 group-hover:opacity-40"
+                    }`}
+                  />
+                  <Icon className={`relative w-3.5 h-3.5 transition-transform duration-500 ${active ? "" : "group-hover:rotate-12"}`} />
+                  <span className="relative text-[10px] tracking-[0.4em]">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+          {mood && (
+            <div className="mt-4 text-center text-[10px] tracking-[0.35em] text-gold-muted">
+              {MOODS.find((m) => m.id === mood)?.hint.toUpperCase()}
+            </div>
+          )}
+        </div>
+
         {/* Search */}
         <div className="max-w-2xl mx-auto mb-10 relative">
           <div className="relative group">
