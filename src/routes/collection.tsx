@@ -3,7 +3,7 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useMemo, useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Plus, ArrowLeft } from "lucide-react";
+import { Search, X, Plus, ArrowLeft, Sun, Snowflake, Sparkles, Flame, Layers } from "lucide-react";
 import { PRODUCTS, ALL_NOTES, type Note } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { CartProvider } from "@/lib/cart";
@@ -21,7 +21,16 @@ const searchSchema = z.object({
   notes: fallback(z.string(), "").default(""), // comma-separated
   min: fallback(z.number(), 0).default(0),
   max: fallback(z.number(), 500).default(500),
+  mood: fallback(z.string(), "").default(""), // all | summer | winter | new | bestseller
 });
+
+const MOODS = [
+  { id: "",           label: "ALL",         icon: Layers,     hint: "The full maison" },
+  { id: "summer",     label: "SUMMER",      icon: Sun,        hint: "Bright, salt & citrus" },
+  { id: "winter",     label: "WINTER",      icon: Snowflake,  hint: "Amber & smoked oud" },
+  { id: "new",        label: "NEW",         icon: Sparkles,   hint: "Just arrived" },
+  { id: "bestseller", label: "BESTSELLERS", icon: Flame,      hint: "Most loved" },
+] as const;
 
 export const Route = createFileRoute("/collection")({
   validateSearch: zodValidator(searchSchema),
@@ -82,9 +91,15 @@ function Discovery() {
     setParam({ notes: next.join(",") });
   };
 
+  const mood = search.mood;
+
   const filtered = useMemo(() => {
     return PRODUCTS.filter((p) => {
       if (category && p.category !== category) return false;
+      if (mood === "summer" && p.season !== "summer") return false;
+      if (mood === "winter" && p.season !== "winter") return false;
+      if (mood === "new" && p.season !== "new") return false;
+      if (mood === "bestseller" && !p.bestseller) return false;
       if (activeNotes.length && !activeNotes.every((n) => p.notes.includes(n))) return false;
       if (p.price < minP || p.price > maxP) return false;
       if (q) {
@@ -93,7 +108,7 @@ function Discovery() {
       }
       return true;
     });
-  }, [category, activeNotes.join(","), minP, maxP, q]);
+  }, [category, mood, activeNotes.join(","), minP, maxP, q]);
 
   // auto-suggest
   const suggestions = useMemo(() => {
@@ -124,6 +139,46 @@ function Discovery() {
           <p className="mt-5 text-sm tracking-[0.2em] text-foreground/60 max-w-xl mx-auto">
             A curated maison of rare oud, liquid gold and midnight amber. Explore by essence, note and desire.
           </p>
+        </div>
+
+        {/* Mood row — Summer / Winter / New / Bestsellers */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-5 max-w-2xl mx-auto">
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/40" />
+            <span className="text-[10px] tracking-[0.5em] text-gold-muted">CHOOSE YOUR MOOD</span>
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/40" />
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {MOODS.map(({ id, label, icon: Icon, hint }) => {
+              const active = mood === id;
+              return (
+                <button
+                  key={id || "all"}
+                  onClick={() => setParam({ mood: id })}
+                  aria-pressed={active}
+                  title={hint}
+                  className={`group relative flex items-center gap-2.5 px-5 py-3 border transition-all duration-500 overflow-hidden ${
+                    active
+                      ? "border-gold text-obsidian bg-gradient-to-br from-gold-bright to-gold shadow-[0_0_28px_rgba(212,175,55,0.45)]"
+                      : "border-gold/25 text-foreground/75 hover:border-gold/70 hover:text-gold hover:-translate-y-0.5"
+                  }`}
+                >
+                  <span
+                    className={`absolute inset-0 bg-gradient-radial-gold blur-2xl transition-opacity duration-700 ${
+                      active ? "opacity-0" : "opacity-0 group-hover:opacity-40"
+                    }`}
+                  />
+                  <Icon className={`relative w-3.5 h-3.5 transition-transform duration-500 ${active ? "" : "group-hover:rotate-12"}`} />
+                  <span className="relative text-[10px] tracking-[0.4em]">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+          {mood && (
+            <div className="mt-4 text-center text-[10px] tracking-[0.35em] text-gold-muted">
+              {MOODS.find((m) => m.id === mood)?.hint.toUpperCase()}
+            </div>
+          )}
         </div>
 
         {/* Search */}
@@ -210,9 +265,9 @@ function Discovery() {
               </div>
             </FilterGroup>
 
-            {(category || activeNotes.length || minP > 0 || maxP < 500 || q) && (
+            {(category || mood || activeNotes.length || minP > 0 || maxP < 500 || q) && (
               <button
-                onClick={() => navigate({ search: { category: "", q: "", notes: "", min: 0, max: 500 }, replace: true })}
+                onClick={() => navigate({ search: { category: "", q: "", notes: "", min: 0, max: 500, mood: "" }, replace: true })}
                 className="flex items-center gap-2 text-[10px] tracking-[0.4em] text-foreground/60 hover:text-gold transition-colors"
               >
                 <X className="w-3 h-3" /> CLEAR ALL
