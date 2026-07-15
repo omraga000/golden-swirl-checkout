@@ -3,7 +3,7 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useMemo, useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, Plus, ArrowLeft } from "lucide-react";
+import { Search, X, Plus, ArrowLeft, Sun, Snowflake, Sparkles, Flame, Layers } from "lucide-react";
 import { PRODUCTS, ALL_NOTES, type Note } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { CartProvider } from "@/lib/cart";
