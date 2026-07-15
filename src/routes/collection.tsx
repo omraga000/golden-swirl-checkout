@@ -265,9 +265,9 @@ function Discovery() {
               </div>
             </FilterGroup>
 
-            {(category || activeNotes.length || minP > 0 || maxP < 500 || q) && (
+            {(category || mood || activeNotes.length || minP > 0 || maxP < 500 || q) && (
               <button
-                onClick={() => navigate({ search: { category: "", q: "", notes: "", min: 0, max: 500 }, replace: true })}
+                onClick={() => navigate({ search: { category: "", q: "", notes: "", min: 0, max: 500, mood: "" }, replace: true })}
                 className="flex items-center gap-2 text-[10px] tracking-[0.4em] text-foreground/60 hover:text-gold transition-colors"
               >
                 <X className="w-3 h-3" /> CLEAR ALL
