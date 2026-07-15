@@ -31,8 +31,8 @@ function Card({ p }: { p: Product }) {
 
   return (
     <article className="group relative flex flex-col">
-      <div className="relative aspect-[4/5] overflow-hidden border border-gold/20 group-hover:border-gold/60 transition-colors">
-        <div className="absolute inset-0 bg-gradient-radial-gold opacity-0 group-hover:opacity-40 blur-2xl transition-opacity duration-700" />
+      <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-gold/20 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.7)] transition-all duration-500 group-hover:border-gold/70 group-hover:shadow-[0_0_35px_-2px_rgba(212,175,55,0.55)]">
+        <div className="absolute inset-0 bg-gradient-radial-gold opacity-0 group-hover:opacity-40 blur-2xl transition-opacity duration-700 pointer-events-none" />
         <img
           ref={imgRef}
           src={p.image}
@@ -40,21 +40,23 @@ function Card({ p }: { p: Product }) {
           width={768}
           height={1024}
           loading="lazy"
-          className="relative w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          className="relative w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/10 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-5 text-center">
-          <div className="text-[10px] tracking-[0.4em] text-gold-muted mb-1.5">{p.collection}</div>
-          <h3 className="font-serif-display text-xl text-foreground mb-1">{p.name}</h3>
-          <div className="text-sm text-gold tracking-widest">${p.price}</div>
-        </div>
+        <div className="absolute inset-0 rounded-lg ring-0 ring-gold/0 group-hover:ring-1 group-hover:ring-gold/60 transition-all duration-500 pointer-events-none" />
       </div>
+
+      <div className="mt-4 text-center px-2">
+        <div className="text-[10px] tracking-[0.4em] text-gold-muted mb-1.5 uppercase">{p.collection}</div>
+        <h3 className="font-serif-display text-xl sm:text-2xl text-gold group-hover:text-gold-bright transition-colors">{p.name}</h3>
+        <div className="mt-1 text-sm text-gold/80 tracking-[0.25em]">${p.price}</div>
+      </div>
+
       <button
         onClick={() => {
           if (imgRef.current) flyToBag(imgRef.current, p.image);
           setTimeout(() => add(p), 100);
         }}
-        className="mt-4 self-center flex items-center gap-2 px-6 py-2.5 text-[10px] tracking-[0.4em] text-gold border border-gold/40 hover:bg-gold hover:text-obsidian transition-all duration-300"
+        className="mt-4 self-center flex items-center gap-2 px-6 py-2.5 text-[10px] tracking-[0.4em] text-gold border border-gold/40 rounded-sm hover:bg-gold hover:text-obsidian hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all duration-300"
       >
         <Plus className="w-3 h-3" />
         {t("product.add")}
