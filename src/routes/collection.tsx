@@ -21,7 +21,16 @@ const searchSchema = z.object({
   notes: fallback(z.string(), "").default(""), // comma-separated
   min: fallback(z.number(), 0).default(0),
   max: fallback(z.number(), 500).default(500),
+  mood: fallback(z.string(), "").default(""), // all | summer | winter | new | bestseller
 });
+
+const MOODS = [
+  { id: "",           label: "ALL",         icon: Layers,     hint: "The full maison" },
+  { id: "summer",     label: "SUMMER",      icon: Sun,        hint: "Bright, salt & citrus" },
+  { id: "winter",     label: "WINTER",      icon: Snowflake,  hint: "Amber & smoked oud" },
+  { id: "new",        label: "NEW",         icon: Sparkles,   hint: "Just arrived" },
+  { id: "bestseller", label: "BESTSELLERS", icon: Flame,      hint: "Most loved" },
+] as const;
 
 export const Route = createFileRoute("/collection")({
   validateSearch: zodValidator(searchSchema),
