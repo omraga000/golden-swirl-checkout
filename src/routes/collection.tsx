@@ -36,10 +36,10 @@ export const Route = createFileRoute("/collection")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
-      { title: "The Collection — ZAYD OUDS" },
-      { name: "description", content: "Discover the ZAYD OUDS collection — rare oud, liquid gold and midnight amber. Filter by category, notes and price." },
-      { property: "og:title", content: "The Collection — ZAYD OUDS" },
-      { property: "og:description", content: "Filter and explore our luxury oud & perfume maison." },
+      { title: "The Collection — SCENT PARFUMERIE" },
+      { name: "description", content: "Discover the SCENT PARFUMERIE collection — rare oud, liquid gold and midnight amber. Filter by category, notes and price." },
+      { property: "og:title", content: "The Collection — SCENT PARFUMERIE" },
+      { property: "og:description", content: "Filter and explore our luxury fragrance maison." },
     ],
   }),
   component: CollectionPage,

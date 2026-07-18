@@ -20,7 +20,7 @@ const translations: Record<Lang, Dict> = {
     "cart.total": "Toplam",
     "cart.wa": "WhatsApp ile Sipariş",
     "cart.tg": "Telegram ile Sipariş",
-    "cart.msg": "Merhaba Zayd Ouds, sipariş vermek istiyorum",
+    "cart.msg": "Merhaba SCENT PARFUMERIE, sipariş vermek istiyorum",
     "footer.tag": "Doğu'nun mirası, modern zamanların lüksü.",
   },
   UZ: {
@@ -38,7 +38,7 @@ const translations: Record<Lang, Dict> = {
     "cart.total": "Jami",
     "cart.wa": "WhatsApp orqali buyurtma",
     "cart.tg": "Telegram orqali buyurtma",
-    "cart.msg": "Salom Zayd Ouds, buyurtma bermoqchiman",
+    "cart.msg": "Salom SCENT PARFUMERIE, buyurtma bermoqchiman",
     "footer.tag": "Sharq merosi, zamonaviy hashamat.",
   },
   RU: {
@@ -56,7 +56,7 @@ const translations: Record<Lang, Dict> = {
     "cart.total": "Итого",
     "cart.wa": "Заказать в WhatsApp",
     "cart.tg": "Заказать в Telegram",
-    "cart.msg": "Здравствуйте, Zayd Ouds, я хочу сделать заказ",
+    "cart.msg": "Здравствуйте, SCENT PARFUMERIE, я хочу сделать заказ",
     "footer.tag": "Восточное наследие, современная роскошь.",
   },
 };

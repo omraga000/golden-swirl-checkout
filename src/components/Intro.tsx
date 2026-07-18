@@ -60,7 +60,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
       <canvas ref={canvasRef} className="absolute inset-0" />
       <div className="relative text-center animate-intro">
         <h1 className="font-display text-5xl md:text-7xl text-gradient-gold tracking-[0.3em]">
-          ZAYD OUDS
+          SCENT PARFUMERIE
         </h1>
         <div className="mt-4 text-xs tracking-[0.5em] text-gold-muted">— MAISON DE PARFUM —</div>
       </div>
