@@ -2,7 +2,7 @@ import { Instagram, Facebook, Music2, MessageCircle, Send } from "lucide-react";
 
 const WHATSAPP_NUMBER = "905015851388"; // +90 501 585 13 88
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Hello ZAYD OUDS, I would like to enquire about a fragrance.",
+  "Hello SCENT PARFUMERIE, I would like to enquire about a fragrance.",
 )}`;
 const TELEGRAM_URL = "https://t.me/zayd_OUDs";
 
@@ -45,13 +45,14 @@ export function Footer() {
               <Send className="relative w-4 h-4 text-gold" />
               <span className="relative text-[10px] tracking-[0.4em] text-foreground group-hover:text-gold transition-colors">
                 TELEGRAM · @zayd_OUDs
+
               </span>
             </a>
           </div>
         </div>
 
         <nav className="flex items-center gap-10 md:gap-16 text-[11px] tracking-[0.4em] text-foreground/70">
-          <a href="#story" className="hover:text-gold transition-colors">ABOUT ZAYD OUDS</a>
+          <a href="#story" className="hover:text-gold transition-colors">ABOUT SCENT PARFUMERIE</a>
           <a href="#contact" className="hover:text-gold transition-colors">CONTACT</a>
           <a href="#faqs" className="hover:text-gold transition-colors">FAQS</a>
         </nav>
@@ -61,7 +62,7 @@ export function Footer() {
           <a href="#" aria-label="TikTok" className="hover:text-gold transition-colors"><Music2 className="w-4 h-4" /></a>
         </div>
         <div className="text-[10px] tracking-[0.35em] text-foreground/30 pt-4">
-          © {new Date().getFullYear()} ZAYD OUDS — MAISON DE PARFUM
+          © {new Date().getFullYear()} SCENT PARFUMERIE — MAISON DE PARFUM
         </div>
       </div>
 

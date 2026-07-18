@@ -38,7 +38,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <img
           src={heroImg}
-          alt="Zayd Ouds perfume bottles on oud wood with golden smoke"
+          alt="SCENT PARFUMERIE perfume bottles on oud wood with golden smoke"
           width={1280}
           height={1024}
           className="w-full h-full object-cover object-center will-change-transform transition-transform duration-500 ease-out"

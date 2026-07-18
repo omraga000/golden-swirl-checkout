@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCart } from "@/lib/cart";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { useFilter, type Category } from "@/lib/filter";
-import emblem from "@/assets/zayd-emblem.png";
+const emblem = "/logo.png";
 
 const CATEGORIES: { key: Category; label: string }[] = [
   { key: "men",     label: "MEN" },
@@ -42,7 +42,7 @@ export function Header() {
         <a
           href="/"
           onClick={(e) => { e.preventDefault(); goHome(); }}
-          aria-label="ZAYD OUDS — Home"
+          aria-label="SCENT PARFUMERIE — Home"
           className="group relative flex items-center shrink-0"
         >
           <span aria-hidden className="absolute inset-0 -m-3 rounded-full bg-[radial-gradient(circle,_rgba(212,175,55,0.45),_transparent_65%)] blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
@@ -51,7 +51,7 @@ export function Header() {
           </span>
           <img
             src={emblem}
-            alt="ZAYD OUDS — Maison de Parfum"
+            alt="SCENT PARFUMERIE — Maison de Parfum"
             width={512}
             height={512}
             loading="eager"
