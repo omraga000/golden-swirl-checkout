@@ -9,13 +9,15 @@ export type Product = {
   image: string;
 };
 
-export type CartItem = Product & { qty: number };
+export type CartItem = Product & { qty: number; size?: string; lineId: string };
+
+type AddOptions = { size?: string; price?: number };
 
 type CartCtx = {
   items: CartItem[];
-  add: (p: Product) => void;
-  remove: (id: string) => void;
-  setQty: (id: string, qty: number) => void;
+  add: (p: Product, opts?: AddOptions) => void;
+  remove: (lineId: string) => void;
+  setQty: (lineId: string, qty: number) => void;
   clear: () => void;
   count: number;
   total: number;
@@ -29,15 +31,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [open, setOpen] = useState(false);
 
-  const add = (p: Product) =>
+  const add = (p: Product, opts?: AddOptions) =>
     setItems((cur) => {
-      const ex = cur.find((i) => i.id === p.id);
-      if (ex) return cur.map((i) => (i.id === p.id ? { ...i, qty: i.qty + 1 } : i));
-      return [...cur, { ...p, qty: 1 }];
+      const size = opts?.size;
+      const price = opts?.price ?? p.price;
+      const lineId = `${p.id}${size ? `-${size}` : ""}`;
+      const ex = cur.find((i) => i.lineId === lineId);
+      if (ex) return cur.map((i) => (i.lineId === lineId ? { ...i, qty: i.qty + 1 } : i));
+      return [...cur, { ...p, price, qty: 1, size, lineId }];
     });
-  const remove = (id: string) => setItems((c) => c.filter((i) => i.id !== id));
-  const setQty = (id: string, qty: number) =>
-    setItems((c) => (qty <= 0 ? c.filter((i) => i.id !== id) : c.map((i) => (i.id === id ? { ...i, qty } : i))));
+  const remove = (lineId: string) => setItems((c) => c.filter((i) => i.lineId !== lineId));
+  const setQty = (lineId: string, qty: number) =>
+    setItems((c) => (qty <= 0 ? c.filter((i) => i.lineId !== lineId) : c.map((i) => (i.lineId === lineId ? { ...i, qty } : i))));
   const clear = () => setItems([]);
   const count = items.reduce((s, i) => s + i.qty, 0);
   const total = items.reduce((s, i) => s + i.qty * i.price, 0);

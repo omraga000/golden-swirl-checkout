@@ -2,7 +2,6 @@ import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n";
 
-const WA_NUMBER = "1234567890"; // placeholder
 const TG_USERNAME = "zayd_OUDs";
 
 export function CartDrawer() {
@@ -10,12 +9,18 @@ export function CartDrawer() {
   const { t } = useI18n();
 
   const buildMsg = () => {
-    const lines = items.map((i) => `• ${i.name} x${i.qty} — $${i.price * i.qty}`).join("%0A");
+    const lines = items
+      .map((i) => {
+        const label = i.size ? `${i.name} — ${i.size}` : i.name;
+        return `• ${label} x${i.qty} — $${i.price * i.qty}`;
+      })
+      .join("%0A");
     const msg = `${t("cart.msg")}:%0A%0A${lines}%0A%0A${t("cart.total")}: $${total}`;
     return msg;
   };
 
-  const orderWA = () => window.open(`https://wa.me/${WA_NUMBER}?text=${buildMsg()}`, "_blank");
+  const WA_NUMBER_INTL = "905015851388";
+  const orderWA = () => window.open(`https://wa.me/${WA_NUMBER_INTL}?text=${buildMsg()}`, "_blank");
   const orderTG = () => window.open(`https://t.me/${TG_USERNAME}?text=${buildMsg()}`, "_blank");
 
   return (
@@ -47,23 +52,26 @@ export function CartDrawer() {
           ) : (
             <div className="space-y-5">
               {items.map((i) => (
-                <div key={i.id} className="flex gap-4 pb-5 border-b border-gold/10">
+                <div key={i.lineId} className="flex gap-4 pb-5 border-b border-gold/10">
                   <img src={i.image} alt={i.name} className="w-20 h-24 object-cover border border-gold/20" />
                   <div className="flex-1 min-w-0">
                     <div className="text-[10px] tracking-[0.3em] text-gold-muted mb-1">{i.collection}</div>
-                    <div className="font-serif-display text-lg text-foreground truncate">{i.name}</div>
+                    <div className="font-serif-display text-lg text-foreground truncate">
+                      {i.name}
+                      {i.size && <span className="text-gold-muted"> — {i.size}</span>}
+                    </div>
                     <div className="text-gold font-display mt-1">${i.price * i.qty}</div>
                     <div className="mt-3 flex items-center justify-between">
                       <div className="flex items-center border border-gold/30">
-                        <button onClick={() => setQty(i.id, i.qty - 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Decrease">
+                        <button onClick={() => setQty(i.lineId, i.qty - 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Decrease">
                           <Minus className="w-3 h-3" />
                         </button>
                         <span className="px-3 text-sm text-foreground min-w-[32px] text-center">{i.qty}</span>
-                        <button onClick={() => setQty(i.id, i.qty + 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Increase">
+                        <button onClick={() => setQty(i.lineId, i.qty + 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Increase">
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
-                      <button onClick={() => remove(i.id)} className="text-foreground/40 hover:text-destructive p-1.5" aria-label="Remove">
+                      <button onClick={() => remove(i.lineId)} className="text-foreground/40 hover:text-destructive p-1.5" aria-label="Remove">
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
