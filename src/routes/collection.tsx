@@ -370,6 +370,10 @@ function PriceSlider({ min, max, lower, upper, onChange }: {
 function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
   const { add } = useCart();
   const imgRef = useRef<HTMLImageElement>(null);
+  const hasSizes = !!p.sizes?.length;
+  const [sizeIdx, setSizeIdx] = useState(0);
+  const currentPrice = hasSizes ? p.sizes![sizeIdx].price : p.price;
+  const currentSize = hasSizes ? p.sizes![sizeIdx].size : undefined;
   return (
     <motion.article
       whileHover={{ y: -6 }}
@@ -402,10 +406,30 @@ function ProductCard({ p }: { p: (typeof PRODUCTS)[number] }) {
             <span key={n} className="text-[9px] tracking-[0.3em] text-gold/80 border border-gold/20 px-2 py-0.5">{n.toUpperCase()}</span>
           ))}
         </div>
+        {hasSizes && (
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            {p.sizes!.map((s, idx) => (
+              <button
+                key={s.size}
+                onClick={() => setSizeIdx(idx)}
+                className={`px-2.5 py-1 text-[9px] tracking-[0.3em] border transition-all duration-300 ${
+                  sizeIdx === idx
+                    ? "border-gold text-obsidian bg-gradient-to-r from-gold-bright to-gold"
+                    : "border-gold/30 text-gold/70 hover:border-gold/70 hover:text-gold"
+                }`}
+              >
+                {s.size} · ${s.price}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="flex items-center justify-between pt-3 border-t border-gold/15">
-          <span className="text-gold tracking-[0.2em] text-sm">${p.price}</span>
+          <span className="text-gold tracking-[0.2em] text-sm">
+            ${currentPrice}
+            {currentSize && <span className="text-gold-muted text-[10px] ml-2">/ {currentSize}</span>}
+          </span>
           <button
-            onClick={() => add(p)}
+            onClick={() => add(p, { size: currentSize, price: currentPrice })}
             className="relative overflow-hidden group/btn flex items-center gap-2 px-4 py-2 text-[10px] tracking-[0.35em] text-gold border border-gold/40"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-gold-bright to-gold translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
