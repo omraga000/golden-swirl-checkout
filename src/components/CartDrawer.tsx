@@ -53,23 +53,26 @@ export function CartDrawer() {
           ) : (
             <div className="space-y-5">
               {items.map((i) => (
-                <div key={i.id} className="flex gap-4 pb-5 border-b border-gold/10">
+                <div key={i.lineId} className="flex gap-4 pb-5 border-b border-gold/10">
                   <img src={i.image} alt={i.name} className="w-20 h-24 object-cover border border-gold/20" />
                   <div className="flex-1 min-w-0">
                     <div className="text-[10px] tracking-[0.3em] text-gold-muted mb-1">{i.collection}</div>
-                    <div className="font-serif-display text-lg text-foreground truncate">{i.name}</div>
+                    <div className="font-serif-display text-lg text-foreground truncate">
+                      {i.name}
+                      {i.size && <span className="text-gold-muted"> — {i.size}</span>}
+                    </div>
                     <div className="text-gold font-display mt-1">${i.price * i.qty}</div>
                     <div className="mt-3 flex items-center justify-between">
                       <div className="flex items-center border border-gold/30">
-                        <button onClick={() => setQty(i.id, i.qty - 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Decrease">
+                        <button onClick={() => setQty(i.lineId, i.qty - 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Decrease">
                           <Minus className="w-3 h-3" />
                         </button>
                         <span className="px-3 text-sm text-foreground min-w-[32px] text-center">{i.qty}</span>
-                        <button onClick={() => setQty(i.id, i.qty + 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Increase">
+                        <button onClick={() => setQty(i.lineId, i.qty + 1)} className="p-1.5 text-gold/80 hover:bg-gold/10" aria-label="Increase">
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
-                      <button onClick={() => remove(i.id)} className="text-foreground/40 hover:text-destructive p-1.5" aria-label="Remove">
+                      <button onClick={() => remove(i.lineId)} className="text-foreground/40 hover:text-destructive p-1.5" aria-label="Remove">
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
