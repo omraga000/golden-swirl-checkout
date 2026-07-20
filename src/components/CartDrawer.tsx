@@ -10,12 +10,18 @@ export function CartDrawer() {
   const { t } = useI18n();
 
   const buildMsg = () => {
-    const lines = items.map((i) => `• ${i.name} x${i.qty} — $${i.price * i.qty}`).join("%0A");
+    const lines = items
+      .map((i) => {
+        const label = i.size ? `${i.name} — ${i.size}` : i.name;
+        return `• ${label} x${i.qty} — $${i.price * i.qty}`;
+      })
+      .join("%0A");
     const msg = `${t("cart.msg")}:%0A%0A${lines}%0A%0A${t("cart.total")}: $${total}`;
     return msg;
   };
 
-  const orderWA = () => window.open(`https://wa.me/${WA_NUMBER}?text=${buildMsg()}`, "_blank");
+  const WA_NUMBER_INTL = "905015851388";
+  const orderWA = () => window.open(`https://wa.me/${WA_NUMBER_INTL}?text=${buildMsg()}`, "_blank");
   const orderTG = () => window.open(`https://t.me/${TG_USERNAME}?text=${buildMsg()}`, "_blank");
 
   return (
