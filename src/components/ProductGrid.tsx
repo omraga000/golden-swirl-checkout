@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { PRODUCTS } from "@/lib/products";
-import { useCart, type Product } from "@/lib/cart";
+import { useRef, useState } from "react";
+import { PRODUCTS, type CatalogProduct } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n";
 import { Plus } from "lucide-react";
 
