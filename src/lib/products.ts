@@ -11,12 +11,15 @@ import type { Category, Season } from "./filter";
 
 export type Note = "Woody" | "Spicy" | "Floral" | "Amber" | "Smoky" | "Musk" | "Citrus" | "Leather";
 
+export type SizeOption = { size: string; price: number };
+
 export type CatalogProduct = Product & {
   category: Category;
   season: Season;
   notes: Note[];
   sensory: string;
   bestseller?: boolean;
+  sizes?: SizeOption[];
 };
 
 export const PRODUCTS: CatalogProduct[] = [
