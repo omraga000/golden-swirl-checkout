@@ -2,7 +2,6 @@ import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n";
 
-const WA_NUMBER = "1234567890"; // placeholder
 const TG_USERNAME = "zayd_OUDs";
 
 export function CartDrawer() {
