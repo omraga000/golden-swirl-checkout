@@ -1,11 +1,11 @@
-import m1 from "@/assets/moodboard/mood-1.jpg.asset.json";
-import m2 from "@/assets/moodboard/mood-2.jpg.asset.json";
-import m3 from "@/assets/moodboard/mood-3.jpg.asset.json";
-import m4 from "@/assets/moodboard/mood-4.jpg.asset.json";
-import m5 from "@/assets/moodboard/mood-5.jpg.asset.json";
-import m6 from "@/assets/moodboard/mood-6.jpg.asset.json";
-import m7 from "@/assets/moodboard/mood-7.jpg.asset.json";
-import m8 from "@/assets/moodboard/mood-8.jpg.asset.json";
+const m1 = { url: "/products/mood-1.jpg" };
+const m2 = { url: "/products/mood-2.jpg" };
+const m3 = { url: "/products/mood-3.jpg" };
+const m4 = { url: "/products/mood-4.jpg" };
+const m5 = { url: "/products/mood-5.jpg" };
+const m6 = { url: "/products/mood-6.jpg" };
+const m7 = { url: "/products/mood-7.jpg" };
+const m8 = { url: "/products/mood-8.jpg" };
 import type { Product } from "./cart";
 import type { Category, Season } from "./filter";
 
