@@ -24,10 +24,14 @@ function flyToBag(fromEl: HTMLElement, imgSrc: string) {
   setTimeout(() => clone.remove(), 850);
 }
 
-function Card({ p }: { p: Product }) {
+function Card({ p }: { p: CatalogProduct }) {
   const { add } = useCart();
   const { t } = useI18n();
   const imgRef = useRef<HTMLImageElement>(null);
+  const hasSizes = !!p.sizes?.length;
+  const [sizeIdx, setSizeIdx] = useState(0);
+  const currentPrice = hasSizes ? p.sizes![sizeIdx].price : p.price;
+  const currentSize = hasSizes ? p.sizes![sizeIdx].size : undefined;
 
   return (
     <article className="group relative flex flex-col">
@@ -48,13 +52,31 @@ function Card({ p }: { p: Product }) {
       <div className="mt-4 text-center px-2">
         <div className="text-[10px] tracking-[0.4em] text-gold-muted mb-1.5 uppercase">{p.collection}</div>
         <h3 className="font-serif-display text-xl sm:text-2xl text-gold group-hover:text-gold-bright transition-colors">{p.name}</h3>
-        <div className="mt-1 text-sm text-gold/80 tracking-[0.25em]">${p.price}</div>
+        <div className="mt-1 text-sm text-gold/80 tracking-[0.25em]">${currentPrice}</div>
       </div>
+
+      {hasSizes && (
+        <div className="mt-3 flex justify-center gap-1.5">
+          {p.sizes!.map((s, idx) => (
+            <button
+              key={s.size}
+              onClick={() => setSizeIdx(idx)}
+              className={`px-2.5 py-1 text-[9px] tracking-[0.25em] border transition-all duration-300 rounded-sm ${
+                sizeIdx === idx
+                  ? "border-gold text-obsidian bg-gradient-to-r from-gold-bright to-gold shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                  : "border-gold/30 text-gold/70 hover:border-gold/70 hover:text-gold"
+              }`}
+            >
+              {s.size}
+            </button>
+          ))}
+        </div>
+      )}
 
       <button
         onClick={() => {
           if (imgRef.current) flyToBag(imgRef.current, p.image);
-          setTimeout(() => add(p), 100);
+          setTimeout(() => add(p, { size: currentSize, price: currentPrice }), 100);
         }}
         className="mt-4 self-center flex items-center gap-2 px-6 py-2.5 text-[10px] tracking-[0.4em] text-gold border border-gold/40 rounded-sm hover:bg-gold hover:text-obsidian hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all duration-300"
       >
